@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="./javascripts/utils/verifications.js"></script>
+  <script src="./javascripts/requests/matchesRequests.js"></script>
+  <script src="./javascripts/requests/usersRequests.js"></script>
+  <script src="./javascripts/matches.js"></script>
+</head>
+
+<body>
+  <header>
+    <h2><span id="player">Hello ______</span>
+      <input type="button" value="Logout" onclick="logout()">
+    </h2>
+    <h1>Choose a match or create a new one</h1>
+  </header>
+  <main>
+    <p>After creating or joining a match you cannot leave and cannot
+      create/join other matches until you finish that match</p>
+    <input type="button" value="Refresh Matches" onclick="refresh()">
+
+    <section id="matches"></section>
+    <input type="button" value="Create my match" onclick="createMatch()">
+  </main>
+</body>
+
+</html>

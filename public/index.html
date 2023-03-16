@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="./javascripts/utils/verifications.js"></script>
+  <script src="./javascripts/requests/matchesRequests.js"></script>
+  <script src="./javascripts/requests/usersRequests.js"></script>
+  <script src="./javascripts/login.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Login</h1>
+  </header>
+  <main>
+    <p> If you have a match running you will enter that match.
+      Otherwise it will go to the match making page.
+    </p>
+    <form action="javascript:login()">
+      <table>
+        <tr>
+          <td>Name:</td>
+          <td><input type="text" autocomplete="username" id="name"></td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td><input type="password" autocomplete="current-password" id="password"></td>
+        </tr>
+      </table>
+      <p id="msg" class="warning"></p>
+      <p><input type="submit" value="Login"></p>
+      <p><a href="register.html">Create a new account</a></p>
+      <p><a href="scoreboard.html">See previous games Score Board</a></p>
+    </form>
+  </main>
+</body>
+
+</html>
