@@ -16,6 +16,25 @@ async function getGameInfo() {
     }
 }
 
+async function getDecksInfo() {
+    let result = await requestDecks();
+    if (!result.successful) {
+        alert("Something is wrong with the game please login again!");
+        window.location.pathname = "index.html";
+    } else {
+        GameInfo.matchDecks = result.decks;
+        if (GameInfo.playerDeck) {
+            GameInfo.playerDeck.update(GameInfo.matchDecks);
+        } else {
+            GameInfo.playerDeck = new Deck('Your cards', GameInfo.matchDecks.mycards, 30, 300, null, GameInfo.images.card);
+        }
+        if (GameInfo.oppDeck) {
+            GameInfo.oppDeck.update(GameInfo.matchDecks);
+        } else {
+            GameInfo.oppdeck = new Deck('Opponent cards', GameInfo.matchDecks.oppcards, 740, 300, null, GameInfo.images.card);
+        }
+    }
+}
 
 async function endturnAction() {
     let result = await requestEndTurn();
