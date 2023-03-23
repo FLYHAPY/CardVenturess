@@ -11,10 +11,13 @@ class GameInfo  {
     static game;
     static images = {};
     static sounds = {};
+    static matchDecks = {};
 
     // rendererers
     static scoreBoard;
     static scoreWindow;
+    static playerDeck;
+    static oppDeck;
 
     // buttons
     static endturnButton;

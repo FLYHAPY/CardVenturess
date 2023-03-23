@@ -2,10 +2,10 @@ const pool = require("../config/database");
 const Settings = require("./gameSettings");
 
 function fromDBCardToCard(dbCard) {
-    return new Card(dbCard.crd_id,dbCard.ugc_id,dbCard.crd_cost,
-        dbCard.crd_name, dbCard.crd_effect, dbCard.crd_note,
+    return new Card(dbCard.crd_id,dbCard.ugc_id,dbCard.crd_hp,
+        dbCard.crd_damage, dbCard.crd_type_id, dbCard.ugc_board_pos,
         new CardType(dbCard.ct_id,dbCard.ct_name),
-        dbCard.ugc_active);
+        );
 }
 
 class CardType {
