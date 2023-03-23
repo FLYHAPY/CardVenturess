@@ -17,6 +17,20 @@ async function requestEndTurn() {
     }
 }
 
+async function requestDecks() {
+    try {
+        const response = await fetch('/api/decks/auth');
+        let result = await response.json();
+        return {successful: response.status == 200,
+                unauthenticated: response.status == 401,
+                decks: result};
+    } catch (err) {
+        // Treat 500 errors here
+        console.log(err);
+        return {err: err};
+    }
+}
+
 async function requestCloseScore() {
     try {
         const response = await fetch(`/api/scores/auth/close`, 
