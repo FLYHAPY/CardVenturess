@@ -115,6 +115,8 @@ class Game {
     // No verifications. We assume the following were already made (because of authentication):
     //  - Id exists and user exists
     //  - User does not have an active game
+    // Here we need to change so that the player gets 300 hp when he joins!!!!!!!!
+
     static async create(userId) {
         try {
             // create the game

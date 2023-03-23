@@ -21,6 +21,7 @@ class ScoreBoard {
         text("Opponent: "+this.game.opponents[0].name,ScoreBoard.x+10,ScoreBoard.y+3*ScoreBoard.height/4);
         text(`(${this.game.player.state})`,ScoreBoard.x+200,ScoreBoard.y+2*ScoreBoard.height/4);
         text(`(${this.game.opponents[0].state})`,ScoreBoard.x+200,ScoreBoard.y+3*ScoreBoard.height/4);
+        text("Health:"+this.game.player.hp,ScoreBoard.x+200,ScoreBoard.y+4*ScoreBoard.height/4)
         if (this.game.state == "Finished"){ 
             fill(200,0,0);
             textSize(24);
