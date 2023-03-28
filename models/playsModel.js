@@ -1,4 +1,6 @@
 const pool = require("../config/database");
+const MatchDecks = require("./decksModel");
+const Settings = require("./gameSettings");
 
 // auxiliary function to check if the game ended 
 async function checkEndGame(game) {
@@ -23,6 +25,9 @@ class Play {
             await pool.query(`Update user_game set ug_state_id=?,ug_order=? where ug_id = ?`, [2, 1, p1Id]);
             // Player that is second changes to order 2
             await pool.query(`Update user_game set ug_order=? where ug_id = ?`, [2, p2Id]);
+
+            await MatchDecks.genPlayerDeck(p1Id);
+            await MatchDecks.genPlayerDeck(p2Id)
 
             // Changing the game state to start
             await pool.query(`Update game set gm_state_id=? where gm_id = ?`, [2, game.id]);
@@ -61,6 +66,8 @@ class Play {
                     await pool.query(`Update game set gm_turn=gm_turn+1 where gm_id = ?`,
                         [game.id]);
                 }
+                await MatchDecks.genPlayerDeck(game.opponents[0].id);
+                await MatchDecks.genPlayerDeck(game.player.id);
             }
 
             return { status: 200, result: { msg: "Your turn ended." } };

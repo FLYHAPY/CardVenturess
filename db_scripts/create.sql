@@ -22,7 +22,7 @@ create table game_state (
 
 create table user_game (
     ug_id int not null auto_increment,
-    ug_order int not null,
+    ug_order int,
     ug_user_id int not null,
     ug_game_id int not null,
     ug_state_id int not null,
