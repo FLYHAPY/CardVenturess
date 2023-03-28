@@ -26,13 +26,13 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks);
         } else {
-            GameInfo.playerDeck = new Deck('Your cards', GameInfo.matchDecks.mycards, 30, 300, null, GameInfo.images.card);
+            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards,30, 300,GameInfo.images.card);
         }
-        if (GameInfo.oppDeck) {
-            GameInfo.oppDeck.update(GameInfo.matchDecks);
-        } else {
-            GameInfo.oppdeck = new Deck('Opponent cards', GameInfo.matchDecks.oppcards, 740, 300, null, GameInfo.images.card);
-        }
+        //if (GameInfo.oppDeck) {
+            //GameInfo.oppDeck.update(GameInfo.matchDecks);
+        //} else {
+            //GameInfo.oppdeck = new Deck(GameInfo.matchDecks.oppCards,740, 300,GameInfo.images.card);
+        //}
     }
 }
 

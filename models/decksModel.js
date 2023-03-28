@@ -4,8 +4,7 @@ const Settings = require("./gameSettings");
 function fromDBCardToCard(dbCard) {
     return new Card(dbCard.crd_id,dbCard.ugc_id,dbCard.crd_hp,
         dbCard.crd_damage, dbCard.crd_type_id, dbCard.ugc_board_pos,
-        new CardType(dbCard.ct_id,dbCard.ct_name),
-        );
+        new CardType(dbCard.ct_id,dbCard.ct_name));
 }
 
 class CardType {
@@ -16,13 +15,14 @@ class CardType {
 }
 
 class Card {
-    constructor(cardId,deckId,hp,damage,type, pos) {
+    constructor(cardId,deckId,hp,damage,type, pos, crdtype,) {
         this.cardId = cardId;
         this.deckId = deckId;
         this.hp = hp;
         this.damage = damage;
         this.type = type;
         this.pos = pos;
+        this.crdtype = crdtype;
     }
 
     static async genCard(playerId) {

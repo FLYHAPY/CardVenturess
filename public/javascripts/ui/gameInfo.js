@@ -11,7 +11,7 @@ class GameInfo  {
     static game;
     static images = {};
     static sounds = {};
-    static matchDecks = {};
+    static matchDecks;
 
     // rendererers
     static scoreBoard;
