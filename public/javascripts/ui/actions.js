@@ -26,6 +26,7 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks);
         } else {
+<<<<<<< Updated upstream
             GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards,30, 300,GameInfo.images.card);
         }
         //if (GameInfo.oppDeck) {
@@ -33,6 +34,28 @@ async function getDecksInfo() {
         //} else {
             //GameInfo.oppdeck = new Deck(GameInfo.matchDecks.oppCards,740, 300,GameInfo.images.card);
         //}
+=======
+            GameInfo.playerDeck = new Deck('Your cards', GameInfo.matchDecks.mycards, 30, 300, playCard, GameInfo.images.card);
+        }
+        //if (GameInfo.oppDeck) {
+            //GameInfo.oppDeck.update(GameInfo.matchDecks);
+        //} else {
+            //GameInfo.oppdeck = new Deck('Opponent cards', GameInfo.matchDecks.oppcards, 740, 300, null, GameInfo.images.card);
+        //}
+    }
+}
+
+async function playCard(card) {
+    if (!card.active) {
+        alert("That card was already played");
+    } else if (confirm(`Do you want to play the "${card.name}" card?`)) {
+        let result = await requestPlayCard(card.deckId);
+        if (result.successful) {
+            await getGameInfo();
+            await getDecksInfo();
+        }
+        alert(result.msg);
+>>>>>>> Stashed changes
     }
 }
 
