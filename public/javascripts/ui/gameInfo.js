@@ -29,7 +29,7 @@ class GameInfo  {
             GameInfo.endturnButton.show();
         } else if (GameInfo.game.player.state == "Waiting") {
             GameInfo.endturnButton.hide();
-        }  else if (GameInfo.game.player.state == "Score") {
+        }  else if (GameInfo.game.player.state == "End") {
             GameInfo.endturnButton.hide();
             GameInfo.scoreWindow.open();
         }
