@@ -52,6 +52,8 @@ create table user_game_card (
     ugc_id int not null auto_increment,
     ugc_user_game_id int not null,
     ugc_crd_id int not null,
+    ugc_crd_hp int,
+    ugc_crd_damage int,
     ugc_board_pos int not null,
     primary key (ugc_id));
 

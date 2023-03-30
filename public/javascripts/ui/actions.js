@@ -26,7 +26,7 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks);
         } else {
-            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards,30, 300,GameInfo.images.card);
+            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards,30, 300,GameInfo.images.card,GameInfo.images.putin);
         }
         //if (GameInfo.oppDeck) {
             //GameInfo.oppDeck.update(GameInfo.matchDecks);

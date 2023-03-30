@@ -124,7 +124,7 @@ class Game {
             let gameId = result.insertId;
             // add the user to the game
             await pool.query(`Insert into user_game (ug_user_id,ug_game_id,ug_state_id, ug_hp) values (?,?,?,?)`,
-                 [userId, gameId, 1,300]);
+                 [userId, gameId, 1, 300]);
             return {status:200, result: {msg: "You created a new game."}};
         } catch (err) {
             console.log(err);
@@ -174,7 +174,7 @@ class Game {
 
             // We join the game but the game still has not started, that will be done outside
             let [result] = await pool.query(`Insert into user_game (ug_user_id,ug_game_id,ug_state_id, ug_hp) values (?,?,?,?)`,
-                 [userId, gameId, 1,300]);
+                        [userId, gameId, 1, 300]);
          
             return {status:200, result: {msg: "You joined the game."}};
         } catch (err) {

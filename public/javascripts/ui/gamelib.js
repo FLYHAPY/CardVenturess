@@ -14,6 +14,7 @@ async function refresh() {
 
 function preload() {
     GameInfo.images.card = loadImage("/assets/pikachu.jpg")
+    GameInfo.images.putin = loadImage("assets/putin.png")
 }
 
 
@@ -50,12 +51,6 @@ function draw() {
     } else  {
         GameInfo.scoreBoard.draw();
         GameInfo.playerDeck.draw();
-    }
-}
-
-async function mouseClicked() {
-    if (GameInfo.playerDeck) {
-        GameInfo.playerDeck.click();
     }
 }
 

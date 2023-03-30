@@ -30,8 +30,8 @@ class Card {
             let [cards] = await pool.query(`select * from card inner join card_type on crd_type_id = ct_id`);
             let rndCard = fromDBCardToCard(cards[Math.floor(Math.random()*cards.length)]);
             // insert the card
-            let [result] = await pool.query(`Insert into user_game_card (ugc_user_game_id,ugc_crd_id,ugc_board_pos)
-                  values (?,?,?)`, [playerId,rndCard.cardId,0]);
+            let [result] = await pool.query(`Insert into user_game_card (ugc_user_game_id,ugc_crd_id,ugc_board_pos,ugc_crd_damage,ugc_crd_hp)
+                  values (?,?,?,?,?)`, [playerId,rndCard.cardId,0,rndCard.damage,rndCard.hp]);
             return {status:200, result: rndCard};
         } catch (err) {
             console.log(err);
