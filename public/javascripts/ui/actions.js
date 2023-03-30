@@ -27,12 +27,19 @@ async function getDecksInfo() {
             GameInfo.playerDeck.update(GameInfo.matchDecks);
         } else {
             GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards,30, 300,GameInfo.images.card,GameInfo.images.putin);
+    }
+}
+}
+async function playCard(card) {
+    if (!card.active) {
+        alert("That card was already played");
+    } else if (confirm(`Do you want to play the "${card.name}" card?`)) {
+        let result = await requestPlayCard(card.deckId);
+        if (result.successful) {
+            await getGameInfo();
+            await getDecksInfo();
         }
-        //if (GameInfo.oppDeck) {
-            //GameInfo.oppDeck.update(GameInfo.matchDecks);
-        //} else {
-            //GameInfo.oppdeck = new Deck(GameInfo.matchDecks.oppCards,740, 300,GameInfo.images.card);
-        //}
+        alert(result.msg);
     }
 }
 
