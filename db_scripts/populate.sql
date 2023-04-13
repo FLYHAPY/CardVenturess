@@ -21,4 +21,4 @@ INSERT INTO game VALUES (1,1,2);
 
 INSERT INTO user_game VALUES (1,1,1,1,2,300),(2,2,2,1,1,300);
 
-INSERT INTO user_game_card (ugc_user_game_id, ugc_crd_id, ugc_board_pos,ugc_crd_hp,ugc_crd_damage) VALUES (1,1,0, 50, 50),(1,2,0, 70, 30);
+INSERT INTO user_game_card (ugc_user_game_id, ugc_crd_id, ugc_board_pos,ugc_crd_hp,ugc_crd_damage) VALUES (1,1,0, 50, 50),(1,2,0, 70, 30),(1,1,0, 50, 50),(2,1,0, 50, 50),(2,2,0, 70, 30),(2,1,0, 50, 50);
