@@ -18,6 +18,7 @@ class GameInfo  {
     static scoreWindow;
     static playerDeck;
     static oppDeck;
+    static playerBoard;
 
     // buttons
     static endturnButton;

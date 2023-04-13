@@ -68,6 +68,7 @@ class Play {
                 }
                 await MatchDecks.genPlayerDeck(game.opponents[0].id);
                 await MatchDecks.genPlayerDeck(game.player.id);
+                await MatchDecks.battlefase(game);
             }
 
             return { status: 200, result: { msg: "Your turn ended." } };

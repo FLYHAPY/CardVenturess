@@ -1,4 +1,4 @@
-class Card {
+class BoardCard {
     static width = 210;
     static height = 315;
     constructor(card,x,y,img,putin) {
@@ -16,33 +16,28 @@ class Card {
             image(this.putin, this.x,this.y, Card.width, Card.height);
         }
     }
-    click() {
-        return mouseX > this.x && mouseX < this.x+Card.width &&
-               mouseY > this.y && mouseY < this.y+Card.height;
-    }
 }
 
 
-class Deck {
+class Board {
 
-    constructor(cardsInfo, x,y,clickAction,cardImg,putin) {
+    constructor(cardsInfo, x,y,cardImg,putin) {
         this.x = x;
         this.y = y;
-        this.width = Card.width*Deck.nCards;
-        this.clickAction = clickAction
+        this.width = BoardCard.width*Deck.nCards;
         this.cardImg = cardImg;
         this.putinImg = putin
         this.cards = this.createCards(cardsInfo);
     }
     
     createCards(cardsInfo) {
-        let cards = [];
+        let Board1 = [];
         let x = this.x;
         for (let cardInfo of cardsInfo) {
-            cards.push(new Card(cardInfo,x,this.y,this.cardImg,this.putinImg));
-            x += Card.width;
+            Board1.push(new BoardCard(cardInfo,x,this.y,this.cardImg,this.putinImg));
+            x += BoardCard.width;
         }
-        return cards;
+        return Board1;
     }
     
     update(cardsInfo) {
@@ -50,17 +45,8 @@ class Deck {
     }
 
     draw () {
-        for (let card of this.cards) {
-            card.draw();
-        }
-    }
-    click() {
-        if (this.clickAction) {
-            for (let card of this.cards) {
-                if (card.click()) {
-                    this.clickAction(card.card);
-                } 
-            }
+        for (let BoardCard of this.cards) {
+            BoardCard.draw();
         }
     }
 }
