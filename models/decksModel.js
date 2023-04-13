@@ -169,8 +169,8 @@ class MatchDecks {
                 } else {
                     game.opponents[0].hp -= playerboardcard.ugc_crd_damage;
                 }
-                await pool.query("update user_game set ug_hp =? where ug_user_id = ?", [game.opponents[0].hp, game.opponents[0].id]);
             }
+            await pool.query("update user_game set ug_hp =? where ug_user_id = ?", [game.opponents[0].hp, game.opponents[0].id]);
        
             // do same with swithed fors
 
@@ -190,9 +190,8 @@ class MatchDecks {
                 } else {
                     game.player.hp -= oppboardcard.ugc_crd_damage;
                 }
-                await pool.query("update user_game set ug_hp = ? where ug_user_id = ?", [game.player.hp, game.player.id]);
             }
-
+            await pool.query("update user_game set ug_hp = ? where ug_user_id = ?", [game.player.hp, game.player.id]);
 
 
 
