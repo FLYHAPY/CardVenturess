@@ -3,7 +3,8 @@ async function refresh() {
         // Every time we are waiting
         await  getGameInfo();
         await getDecksInfo();
-        await getYourBoard();        
+        await getYourBoard();
+        await getOppBoard();        
         if (GameInfo.game.player.state != "Waiting") {
             // The moment we pass from waiting to play
             GameInfo.prepareUI();
@@ -16,6 +17,9 @@ async function refresh() {
 function preload() {
     GameInfo.images.card = loadImage("/assets/pikachu.jpg")
     GameInfo.images.putin = loadImage("assets/putin.png")
+    GameInfo.images.placeholder = loadImage("assets/Solid_white.png")
+    GameInfo.images.building = loadImage("assets/china.jpg")
+    GameInfo.images.spell = loadImage("assets/spell.png")
 }
 
 
@@ -26,7 +30,8 @@ async function setup() {
     
     await  getGameInfo();
     await getDecksInfo();
-    await getYourBoard(); 
+    await getYourBoard();
+    await getOppBoard(); 
     setInterval(refresh,1000);
 
     //buttons (create a separated function if they are many)
@@ -54,6 +59,7 @@ function draw() {
         GameInfo.scoreBoard.draw();
         GameInfo.playerDeck.draw();
         GameInfo.playerBoard.draw();
+        GameInfo.oppBoard.draw();
     }
 }
 

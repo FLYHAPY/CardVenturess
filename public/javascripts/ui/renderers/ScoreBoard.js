@@ -2,7 +2,7 @@
 
 class ScoreBoard {
     static width = 300;
-    static height = 100;
+    static height = 150;
     static x = 10;
     static y = 10;
     constructor(game) {
@@ -17,11 +17,13 @@ class ScoreBoard {
         textSize(16);
         textStyle(NORMAL);
         text("Turn: "+this.game.turn,ScoreBoard.x+10,ScoreBoard.y+ScoreBoard.height/4)
-        text("Player: "+this.game.player.name,ScoreBoard.x+10,ScoreBoard.y+2*ScoreBoard.height/4);
-        text("Opponent: "+this.game.opponents[0].name,ScoreBoard.x+10,ScoreBoard.y+3*ScoreBoard.height/4);
-        text(`(${this.game.player.state})`,ScoreBoard.x+200,ScoreBoard.y+2*ScoreBoard.height/4);
-        text(`(${this.game.opponents[0].state})`,ScoreBoard.x+200,ScoreBoard.y+3*ScoreBoard.height/4);
-        text("Health:"+this.game.player.hp,ScoreBoard.x+200,ScoreBoard.y+4*ScoreBoard.height/4)
+        text("Player: "+this.game.player.name,ScoreBoard.x+10,ScoreBoard.y+1.5*ScoreBoard.height/4);
+        text("Opponent: "+this.game.opponents[0].name,ScoreBoard.x+10,ScoreBoard.y+2*ScoreBoard.height/4);
+        text(`(${this.game.player.state})`,ScoreBoard.x+200,ScoreBoard.y+1.5*ScoreBoard.height/4);
+        text(`(${this.game.opponents[0].state})`,ScoreBoard.x+200,ScoreBoard.y+2*ScoreBoard.height/4);
+        text("Health:"+this.game.player.hp,ScoreBoard.x+10,ScoreBoard.y+2.5*ScoreBoard.height/4)
+        text("OppHealth:"+this.game.opponents[0].hp,ScoreBoard.x+200,ScoreBoard.y+2.5*ScoreBoard.height/4)
+
         if (this.game.state == "Finished"){ 
             fill(200,0,0);
             textSize(24);

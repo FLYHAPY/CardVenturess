@@ -54,7 +54,9 @@ create table user_game_card (
     ugc_crd_id int not null,
     ugc_crd_hp int,
     ugc_crd_damage int,
+    ugc_crd_type int not null,
     ugc_board_pos int not null,
+    ugc_active int not null,
     primary key (ugc_id));
 
 # Foreign Keys
@@ -85,4 +87,8 @@ alter table user_game_card add constraint user_game_card_fk_user_game
 
 alter table user_game_card add constraint user_game_card_fk_user_card
             foreign key (ugc_crd_id) references card(crd_id)
+            ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table user_game_card add constraint user_game_card_fk_user_card_type
+            foreign key (ugc_crd_type) references card(crd_type_id)
             ON DELETE NO ACTION ON UPDATE NO ACTION;

@@ -1,4 +1,4 @@
-class Card {
+class BoardCardOpp {
     static width = 210;
     static height = 315;
     constructor(card,x,y,img,putin,building,spell) {
@@ -15,14 +15,11 @@ class Card {
             image(this.img, this.x,this.y, Card.width, Card.height);
             text(this.card.current_hp,this.x + 100, this.y)
             text(this.card.current_damage,this.x, this.y)
-
-        }
-        if (this.card.cardId == 2) { 
+        }else if (this.card.cardId == 2) { 
             image(this.putin, this.x,this.y, Card.width, Card.height);
             text(this.card.current_hp,this.x + 100, this.y)
             text(this.card.current_damage,this.x, this.y)
-        }
-        if (this.card.cardId == 3) { 
+        }else if (this.card.cardId == 3) { 
             image(this.building, this.x,this.y, Card.width, Card.height);
             text(this.card.current_hp,this.x + 100, this.y)
             text(this.card.current_damage,this.x, this.y)
@@ -33,36 +30,32 @@ class Card {
             text(this.card.current_damage,this.x, this.y)
         }
     }
-    click() {
-        return mouseX > this.x && mouseX < this.x+Card.width &&
-               mouseY > this.y && mouseY < this.y+Card.height;
-               
-    }
 }
 
 
-class Deck {
+class OppBoard {
 
-    constructor(cardsInfo, x,y,clickAction,cardImg,putin,building,spell) {
+    constructor(cardsInfo, x,y,cardImg,putin, building, spell) {
         this.x = x;
         this.y = y;
-        this.width = Card.width*Deck.nCards;
-        this.clickAction = clickAction
+        this.width = BoardCardOpp.width*Deck.nCards;
         this.cardImg = cardImg;
         this.putinImg = putin;
-        this.building = building;
+        this.building = building
         this.spell = spell
         this.cards = this.createCards(cardsInfo);
     }
     
     createCards(cardsInfo) {
-        let cards = [];
+        let Board2 = [];
         let x = this.x;
-        for (let cardInfo of cardsInfo) {
-            cards.push(new Card(cardInfo,x,this.y,this.cardImg,this.putinImg,this.building,this.spell));
-            x += Card.width;
+        if(cardsInfo){
+            for (let cardInfo of cardsInfo) {
+                Board2.push(new BoardCardOpp(cardInfo,x,this.y,this.cardImg,this.putinImg, this.building, this.spell));
+                x += BoardCardOpp.width;
+            }
         }
-        return cards;
+        return Board2;
     }
     
     update(cardsInfo) {
@@ -70,17 +63,8 @@ class Deck {
     }
 
     draw () {
-        for (let card of this.cards) {
-            card.draw();
-        }
-    }
-    click() {
-        if (this.clickAction) {
-            for (let card of this.cards) {
-                if (card.click()) {
-                    this.clickAction(card.card);
-                } 
-            }
+        for (let BoardCardOpp of this.cards) {
+            BoardCardOpp.draw();
         }
     }
 }

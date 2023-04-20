@@ -1,5 +1,3 @@
-const { Result } = require("express-validator");
-
 async function getGameInfo() {
     let result = await requestPlayerGame();
     if (!result.successful) {
@@ -27,7 +25,7 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks);
         } else {
-            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 30, 300, playCard, GameInfo.images.card, GameInfo.images.putin);
+            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 30, 750, playCard, GameInfo.images.card, GameInfo.images.putin, GameInfo.images.building, GameInfo.images.spell);
         }
     }
 }
@@ -40,9 +38,25 @@ async function getYourBoard() {
     } else {
         GameInfo.matchDecks = result.decks;
         if (GameInfo.playerBoard) {
-            GameInfo.playerBoard.update(GameInfo.matchDecks);
+            GameInfo.playerBoard.update(GameInfo.matchDecks.mycards);
         } else {
-            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, 30, 100, GameInfo.images.card, GameInfo.images.putin);
+            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, 30, 400, GameInfo.images.card, GameInfo.images.putin, GameInfo.images.building, GameInfo.images.spell);
+        }
+    }
+}
+
+async function getOppBoard() {
+    let result = await requestOppBoard();
+    if (!result.successful) {
+        alert("Something is wrong with the game please login again!");
+        window.location.pathname = "index.html";
+    } else {
+        GameInfo.matchDecks = result.decks;
+        console.log(GameInfo.matchDecks.oppcards)
+        if (GameInfo.oppBoard) {
+            GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
+        } else {
+            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards, 1000, 300, GameInfo.images.card, GameInfo.images.putin, GameInfo.images.building,GameInfo.images.spell);
         }
     }
 }
@@ -56,7 +70,7 @@ async function playCard(card) {
         }
 
         if (result.successful) {
-        let result = await requestPlayCard(card.deckId,position);
+        let result = await requestPlayCard(card.deckId,position,card.type);
         }
     }
 

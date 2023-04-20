@@ -31,7 +31,7 @@ async function requestDecks() {
     }
 }
 
-async function requestPlayCard(deckId,position) {
+async function requestPlayCard(deckId,position,type) {
     try {
         const response = await fetch(`/api/decks/play`, 
         {
@@ -43,6 +43,7 @@ async function requestPlayCard(deckId,position) {
           body: JSON.stringify({
             deckId: deckId,
             position: position,
+            type: type,
         })
       });
       let result = await response.json();
@@ -57,6 +58,20 @@ async function requestPlayCard(deckId,position) {
 async function requestYourBoard() {
     try {
         const response = await fetch(`/api/decks/board`);
+        let result = await response.json();
+        return { successful: response.status == 200,
+                 unauthenticated: response.status == 401,
+                 decks: result};
+    } catch (err) {
+        // Treat 500 errors here
+        console.log(err);
+        return {err: err};
+    }
+}
+
+async function requestOppBoard() {
+    try {
+        const response = await fetch(`/api/decks/boardOpp`);
         let result = await response.json();
         return { successful: response.status == 200,
                  unauthenticated: response.status == 401,
