@@ -16,7 +16,7 @@ async function refresh() {
 
 function preload() {
     GameInfo.images.card = loadImage("/assets/pikachu.jpg")
-    GameInfo.images.putin = loadImage("assets/putin.png")
+    GameInfo.images.charmander = loadImage("assets/charmander.png")
     GameInfo.images.placeholder = loadImage("assets/Solid_white.png")
     GameInfo.images.building = loadImage("assets/china.jpg")
     GameInfo.images.spell = loadImage("assets/spell.png")

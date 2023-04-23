@@ -4,7 +4,7 @@ const Settings = require("./gameSettings");
 
 // auxiliary function to check if the game ended 
 async function checkEndGame(game) {
-    return game.turn >= Play.maxNumberTurns;
+    return game.player.hp <= 0 || game.opponents[0].hp <= 0;
 }
 
 class Play {
@@ -59,6 +59,9 @@ class Play {
             // Both players played
             if (game.player.order == 2) {
                 // Criteria to check if game ended
+                
+                await MatchDecks.reduceHealth(game);
+                
                 if (await checkEndGame(game)) {
                     return await Play.endGame(game);
                 } else {
@@ -70,7 +73,6 @@ class Play {
                 await MatchDecks.genPlayerDeck(game.player.id);
                 await MatchDecks.battlefase(game);
                 await MatchDecks.showCards(game);
-                await MatchDecks.reduceHealth(game);
                 await MatchDecks.killCards(game);
             }
 
@@ -94,8 +96,16 @@ class Play {
             // Insert score lines with the state and points.
             // For this template both are  tied (id = 1) and with one point 
             let sqlScore = `Insert into scoreboard (sb_user_game_id,sb_state_id,sb_points) values (?,?,?)`;
-            await pool.query(sqlScore, [game.player.id,1,1]);
-            await pool.query(sqlScore, [game.opponents[0].id,1,1]);
+
+            if (game.player.hp > game.opponents[0].hp) {
+                await pool.query(sqlScore, [game.player.id, 3, game.player.hp]);
+                await pool.query(sqlScore, [game.opponents[0].id, 2, game.opponents[0].hp]);
+            }
+
+            if (game.player.hp < game.opponents[0].hp) {
+                await pool.query(sqlScore, [game.player.id, 2, game.player.hp]);
+                await pool.query(sqlScore, [game.opponents[0].id, 3, game.opponents[0].hp]);
+            }
 
             return { status: 200, result: { msg: "Game ended. Check scores." } };
         } catch (err) {

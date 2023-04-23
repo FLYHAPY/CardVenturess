@@ -1,7 +1,7 @@
 
 
 class ScoreBoard {
-    static width = 300;
+    static width = 320;
     static height = 150;
     static x = 10;
     static y = 10;

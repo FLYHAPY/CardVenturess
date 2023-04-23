@@ -25,7 +25,7 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks);
         } else {
-            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 30, 750, playCard, GameInfo.images.card, GameInfo.images.putin, GameInfo.images.building, GameInfo.images.spell);
+            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 30, 1100, playCard, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
         }
     }
 }
@@ -40,7 +40,7 @@ async function getYourBoard() {
         if (GameInfo.playerBoard) {
             GameInfo.playerBoard.update(GameInfo.matchDecks.mycards);
         } else {
-            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, 30, 400, GameInfo.images.card, GameInfo.images.putin, GameInfo.images.building, GameInfo.images.spell);
+            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
         }
     }
 }
@@ -54,30 +54,31 @@ async function getOppBoard() {
         GameInfo.matchDecks = result.decks;
         console.log(GameInfo.matchDecks.oppcards)
         if (GameInfo.oppBoard) {
-            GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
+                GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
         } else {
-            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards, 1000, 300, GameInfo.images.card, GameInfo.images.putin, GameInfo.images.building,GameInfo.images.spell);
+            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
         }
+
     }
 }
 
 async function playCard(card) {
-        let position = parseInt( prompt(`What position (1,2,3)?`));
-        
-        if (position > 4 || position < 1){
-            alert("That position doesn't exist");
-            result = !result.successful
-        }
+    let position = parseInt(prompt(`What position (1,2,3)?`));
 
-        if (result.successful) {
-        let result = await requestPlayCard(card.deckId,position,card.type);
-        }
+    if (position > 4 || position < 1) {
+        alert("That position doesn't exist");
+        result = !result.successful
     }
+
+    if (result.successful) {
+        let result = await requestPlayCard(card.deckId, position, card.type);
+    }
+}
 
 async function endturnAction() {
     let result = await requestEndTurn();
     if (result.successful) {
-        await  getGameInfo();
+        await getGameInfo();
         GameInfo.prepareUI();
     } else alert("Something went wrong when ending the turn.")
 }
