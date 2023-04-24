@@ -4,11 +4,14 @@
 insert into game_state (gst_state) values ('Waiting');
 insert into game_state (gst_state) values ('Placing');
 insert into game_state (gst_state) values ('Finished');
+insert into game_state (gst_state) values ('Canceled');
 
 # Do not change the order, but you can add more in the end
 insert into user_game_state (ugst_state) values ('Waiting');
 insert into user_game_state (ugst_state) values ('Playing');
+insert into user_game_state (ugst_state) values ('Score');
 insert into user_game_state (ugst_state) values ('End');
+
 
 insert into card_type (ct_name) values ("Monster");
 insert into card_type (ct_name) values ("Building");

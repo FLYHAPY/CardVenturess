@@ -1,1 +1,1 @@
-module.exports.nCards = 3;
+module.exports.nCards = 4;

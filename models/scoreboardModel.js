@@ -114,7 +114,7 @@ class ScoreBoardLine {
      // Considering all game state verifications are done (since they don't need new DB queries)
     static async closeScorePlayer(game) {
         try {
-            await pool.query(`Update user_game set ug_state_id = 4 where ug_id = ?`,game.player.id);
+            await pool.query(`Update user_game set ug_state_id = 3 where ug_id = ?`,game.player.id);
             return {status:200, result: {msg: "Score closed. You can check all scores in the Score Board page."}};
         } catch (err) {
             console.log(err);

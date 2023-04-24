@@ -81,8 +81,8 @@ class MatchDecks {
             let [dbcards] = await pool.query(`Select * from card
             inner join card_type on crd_type_id = ct_id 
             inner join user_game_card on ugc_crd_id = crd_id
-            where (ugc_user_game_id = ? or ugc_user_game_id = ?) and ugc_board_pos = 0`,
-                [game.player.id, game.opponents[0].id]);
+            where ugc_user_game_id = ?  and ugc_board_pos = 0`,
+                [game.player.id]);
             let playerCards = [];
             let oppCards = [];
             for (let dbcard of dbcards) {

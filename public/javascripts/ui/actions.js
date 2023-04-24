@@ -63,7 +63,7 @@ async function getOppBoard() {
 }
 
 async function playCard(card) {
-    let position = parseInt(prompt(`What position (1,2,3)?`));
+    let position = parseInt(prompt(`What position (1,2,3,4)?`));
 
     if (position > 4 || position < 1) {
         alert("That position doesn't exist");

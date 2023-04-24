@@ -88,8 +88,8 @@ class Play {
         try {
             // Both players go to score phase (id = 3)
             let sqlPlayer = `Update user_game set ug_state_id = ? where ug_id = ?`;
-            await pool.query(sqlPlayer, [3, game.player.id]);
-            await pool.query(sqlPlayer, [3, game.opponents[0].id]);
+            await pool.query(sqlPlayer, [4, game.player.id]);
+            await pool.query(sqlPlayer, [4, game.opponents[0].id]);
             // Set game to finished (id = 3)
             await pool.query(`Update game set gm_state_id=? where gm_id = ?`, [3, game.id]);
 
