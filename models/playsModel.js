@@ -60,7 +60,6 @@ class Play {
             if (game.player.order == 2) {
                 // Criteria to check if game ended
                 
-                await MatchDecks.reduceHealth(game);
                 
                 if (await checkEndGame(game)) {
                     return await Play.endGame(game);
@@ -73,6 +72,7 @@ class Play {
                 await MatchDecks.genPlayerDeck(game.player.id);
                 await MatchDecks.battlefase(game);
                 await MatchDecks.showCards(game);
+                await MatchDecks.reduceHealth(game);
                 await MatchDecks.killCards(game);
             }
 
