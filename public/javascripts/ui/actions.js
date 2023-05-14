@@ -23,7 +23,7 @@ async function getDecksInfo() {
     } else {
         GameInfo.matchDecks = result.decks;
         if (GameInfo.playerDeck) {
-            GameInfo.playerDeck.update(GameInfo.matchDecks);
+            GameInfo.playerDeck.update(GameInfo.matchDecks.mycards);
         } else {
             GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 30, 1100, playCard, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
         }
@@ -52,7 +52,6 @@ async function getOppBoard() {
         window.location.pathname = "index.html";
     } else {
         GameInfo.matchDecks = result.decks;
-        console.log(GameInfo.matchDecks.oppcards)
         if (GameInfo.oppBoard) {
                 GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
         } else {
@@ -72,6 +71,10 @@ async function playCard(card) {
 
     if (result.successful) {
         let result = await requestPlayCard(card.deckId, position, card.type);
+        await getGameInfo();
+        await getYourBoard();
+        await getDecksInfo();
+        GameInfo.prepareUI();
     }
 }
 

@@ -11,106 +11,30 @@ class BoardCard {
         this.spell = spell;
     }
     draw() {
-        if (this.card.pos == 1) {
-            if (this.card.cardId == 1) {
-                image(this.img, BoardCard.pos1x, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                text(this.card.current_hp, BoardCard.pos1x + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 2) {
-                image(this.charmander, BoardCard.pos1x, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                text(this.card.current_hp, BoardCard.pos1x + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 3) {
-                image(this.building, BoardCard.pos1x, BoardCard.pos1y + 100, BoardCard.width, BoardCard.height);
-                text(this.card.current_hp, BoardCard.pos1x + 100, BoardCard.pos1y + 100)
-                text(this.card.current_damage, BoardCard.pos1x, BoardCard.pos1y + 100)
-            }
-            if (this.card.cardId == 4) {
-                image(this.spell, BoardCard.pos1x, BoardCard.pos1y+ 200, BoardCard.width, BoardCard.height);
+        switch(this.card.cardId){
+            case 1:
+                image(this.img, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y, BoardCard.width, BoardCard.height);
+                text(this.card.current_hp, BoardCard.pos1x + 100 + 200 * (this.card.pos - 1), BoardCard.pos1y)
+                text(this.card.current_damage, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y)
+                break;
+            case 2:
+                image(this.charmander, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y, BoardCard.width, BoardCard.height);
+                text(this.card.current_hp, BoardCard.pos1x + 100 + 200 * (this.card.pos - 1), BoardCard.pos1y)
+                text(this.card.current_damage, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y)
+                break;
+            case 3:
+                image(this.building, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y + 100, BoardCard.width, BoardCard.height);
+                text(this.card.current_hp, BoardCard.pos1x + 100 + 200 * (this.card.pos - 1), BoardCard.pos1y + 100)
+                text(this.card.current_damage, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y + 100)
+                break;
+            case 4:
+                image(this.spell, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y + 200, BoardCard.width, BoardCard.height);
                 fill(255, 255, 255);
-                text(this.card.current_hp, BoardCard.pos1x + 100, BoardCard.pos1y + 200)
-                text(this.card.current_damage, BoardCard.pos1x, BoardCard.pos1y + 200)
-            }
-        }
-        if (this.card.pos == 2) {
-            if (this.card.cardId == 1) {
-                image(this.img, BoardCard.pos1x + 200, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 200 + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x + 200, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 2) {
-                image(this.charmander, BoardCard.pos1x + 200, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 200 + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x + 200, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 3) {
-                image(this.building, BoardCard.pos1x + 200, BoardCard.pos1y + 100, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 200 + 100, BoardCard.pos1y + 100)
-                text(this.card.current_damage, BoardCard.pos1x + 200, BoardCard.pos1y + 100)
-            }
-            if (this.card.cardId == 4) {
-                image(this.spell, BoardCard.pos1x + 200, BoardCard.pos1y+ 200, BoardCard.width, BoardCard.height);
-                fill(255, 255, 255);
-                text(this.card.current_hp, BoardCard.pos1x + 200 + 100, BoardCard.pos1y + 200)
-                text(this.card.current_damage, BoardCard.pos1x + 200, BoardCard.pos1y + 200)
-            }
-        }
-        if (this.card.pos == 3) {
-            if (this.card.cardId == 1) {
-                image(this.img, BoardCard.pos1x + 400, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 400 + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x + 400, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 2) {
-                image(this.charmander, BoardCard.pos1x + 400, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 400 + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x + 400, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 3) {
-                image(this.building, BoardCard.pos1x + 400, BoardCard.pos1y + 100, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 400 + 100, BoardCard.pos1y + 100)
-                text(this.card.current_damage, BoardCard.pos1x + 400, BoardCard.pos1y + 100)
-            }
-            if (this.card.cardId == 4) {
-                image(this.spell, BoardCard.pos1x + 400, BoardCard.pos1y+ 200, BoardCard.width, BoardCard.height);
-                fill(255, 255, 255);
-                text(this.card.current_hp, BoardCard.pos1x + 400 + 100, BoardCard.pos1y + 200)
-                text(this.card.current_damage, BoardCard.pos1x + 400, BoardCard.pos1y + 200)
-            }
-        }
-        if (this.card.pos == 4) {
-            if (this.card.cardId == 1) {
-                image(this.img, BoardCard.pos1x + 600, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 600 + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x + 600, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 2) {
-                image(this.charmander, BoardCard.pos1x + 600, BoardCard.pos1y, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 600 + 100, BoardCard.pos1y)
-                text(this.card.current_damage, BoardCard.pos1x + 600, BoardCard.pos1y)
-            }
-            if (this.card.cardId == 3) {
-                image(this.building, BoardCard.pos1x + 600, BoardCard.pos1y + 100, BoardCard.width, BoardCard.height);
-                fill(0, 0, 0);
-                text(this.card.current_hp, BoardCard.pos1x + 600 + 100, BoardCard.pos1y + 100)
-                text(this.card.current_damage, BoardCard.pos1x + 600, BoardCard.pos1y + 100)
-            }
-            if (this.card.cardId == 4) {
-                image(this.spell, BoardCard.pos1x + 600, BoardCard.pos1y+ 200, BoardCard.width, BoardCard.height);
-                fill(255, 255, 255);
-                text(this.card.current_hp, BoardCard.pos1x + 600 + 100, BoardCard.pos1y + 200)
-                text(this.card.current_damage, BoardCard.pos1x + 600, BoardCard.pos1y + 200)
-            }
+                text(this.card.current_hp, BoardCard.pos1x + 100 + 200 * (this.card.pos - 1), BoardCard.pos1y + 200)
+                text(this.card.current_damage, BoardCard.pos1x + 200 * (this.card.pos - 1), BoardCard.pos1y + 200)
+                break;
+            default:
+                break;
         }
     }
 }

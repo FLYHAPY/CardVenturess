@@ -337,11 +337,6 @@ class MatchDecks {
                         await pool.query("update user_game_card set ugc_board_pos = 5 where ugc_board_pos = ? and ugc_user_game_id = ?", [dboppcardtoremove.ugc_board_pos, game.opponents[0].id]);
                     }
             }
-                  
-                
-        
-
-
             return { status: 200 }
 
         } catch (error) {

@@ -33,7 +33,7 @@ function fillScores(scores) {
             td.textContent = player.state;
             tr.appendChild(td);
             td = document.createElement("td");
-            td.textContent = "Points: "+player.points;
+            td.textContent = "Final Health: "+player.points;
             tr.appendChild(td);
         }
         container.appendChild(elem);
