@@ -1,7 +1,7 @@
 class Card {
     static width = 210;
     static height = 315;
-    constructor(card,x,y,img,charmander,building,spell) {
+    constructor(card, x, y, img, charmander, building, spell) {
         this.card = card;
         this.x = x;
         this.y = y;
@@ -9,67 +9,102 @@ class Card {
         this.charmander = charmander;
         this.building = building;
         this.spell = spell;
+        this.dragging = false;
+        this.offsety = 0;
+        this.offsetx = 0;
+        this.dragx = 0;
+        this.dragy = 0;
+        this.selected = false;
     }
     draw() {
         if (this.card.cardId == 1) {
-            image(this.img, this.x,this.y, Card.width, Card.height);
-            text(this.card.current_hp,this.x + 100, this.y)
-            text(this.card.current_damage,this.x, this.y)
+            image(this.img, this.x, this.y, Card.width, Card.height);
+            text(this.card.current_hp, this.x + 100, this.y)
+            text(this.card.current_damage, this.x, this.y)
+            if (this.dragging) {
+                tint(255, 100);
+                image(this.img, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+            }
 
         }
-        if (this.card.cardId == 2) { 
-            image(this.charmander, this.x,this.y, Card.width, Card.height);
-            text(this.card.current_hp,this.x + 100, this.y)
-            text(this.card.current_damage,this.x, this.y)
+        if (this.card.cardId == 2) {
+            image(this.charmander, this.x, this.y, Card.width, Card.height);
+            text(this.card.current_hp, this.x + 100, this.y)
+            text(this.card.current_damage, this.x, this.y)
+            if (this.dragging) {
+                tint(255, 100);
+                image(this.charmander, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+            }
         }
-        if (this.card.cardId == 3) { 
-            image(this.building, this.x,this.y, Card.width, Card.height);
-            text(this.card.current_hp,this.x + 100, this.y)
-            text(this.card.current_damage,this.x, this.y)
+        if (this.card.cardId == 3) {
+            image(this.building, this.x, this.y, Card.width, Card.height);
+            text(this.card.current_hp, this.x + 100, this.y)
+            text(this.card.current_damage, this.x, this.y)
+            if (this.dragging) {
+                tint(255, 100);
+                image(this.building, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+            }
         }
-        if (this.card.cardId == 4) { 
-            image(this.spell, this.x,this.y, Card.width, Card.height);
-            text(this.card.current_hp,this.x + 100, this.y)
-            text(this.card.current_damage,this.x, this.y)
+        if (this.card.cardId == 4) {
+            image(this.spell, this.x, this.y, Card.width, Card.height);
+            text(this.card.current_hp, this.x + 100, this.y)
+            text(this.card.current_damage, this.x, this.y)
+            if (this.dragging) {
+                tint(255, 100);
+                image(this.spell, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+            }
         }
     }
     click() {
-        return mouseX > this.x && mouseX < this.x+Card.width &&
-               mouseY > this.y && mouseY < this.y+Card.height;
-               
+        return mouseX > this.x && mouseX < this.x + Card.width &&
+            mouseY > this.y && mouseY < this.y + Card.height;
+
     }
 }
 
 
 class Deck {
 
-    constructor(cardsInfo, x,y,clickAction,cardImg,charmander,building,spell) {
+    constructor(cardsInfo, x, y, cardImg, charmander, building, spell, dragAction) {
         this.x = x;
         this.y = y;
-        this.width = Card.width*Deck.nCards;
-        this.clickAction = clickAction
+        this.width = Card.width * Deck.nCards;
         this.cardImg = cardImg;
         this.charmanderImg = charmander;
         this.building = building;
         this.spell = spell
         this.cards = this.createCards(cardsInfo);
+        this.draggable = false;
+        this.dragAction = dragAction;
+        this.draggingCard = null;
     }
-    
+
     createCards(cardsInfo) {
         let cards = [];
         let x = this.x;
         for (let cardInfo of cardsInfo) {
-            cards.push(new Card(cardInfo,x,this.y,this.cardImg,this.charmanderImg,this.building,this.spell));
+            cards.push(new Card(cardInfo, x, this.y, this.cardImg, this.charmanderImg, this.building, this.spell));
             x += Card.width;
         }
         return cards;
     }
-    
+
     update(cardsInfo) {
         this.cards = this.createCards(cardsInfo);
     }
 
-    draw () {
+    updateDrag() {
+        if (this.draggingCard !== null) {
+            this.draggingCard.dragx = mouseX + this.draggingCard.offsetX;
+            this.draggingCard.dragy = mouseY + this.draggingCard.offsetY;
+        }
+    }
+
+    draw() {
         for (let card of this.cards) {
             card.draw();
         }
@@ -79,8 +114,53 @@ class Deck {
             for (let card of this.cards) {
                 if (card.click()) {
                     this.clickAction(card.card);
-                } 
+                }
             }
+        }
+    }
+
+    press() {
+        if (!this.draggable) {
+            return;
+        }
+        for (let card of this.cards) {
+            //este if é para saberes se o teu rato esta em cima da carta se tiver ele deixa te arrastar
+            if (this.draggable && mouseX > card.x  && mouseX < card.x + Card.width && mouseY > card.y && mouseY < card.y + Card.height) {
+                card.offsetX = card.x - mouseX;
+                card.offsetY = card.y - mouseY;
+                card.dragx = mouseX + card.offsetX;
+                card.dragy = mouseY + card.offsetY;
+                card.dragging = true;
+                this.draggingCard = card;
+            }
+        }
+    }
+
+    //dragndrop
+    release() {
+        if (!this.draggable || this.draggingCard === null) {
+            return;
+        }
+        this.draggingCard.dragging = false;
+        if (this.dragAction) {
+            //isto é o que vais mandar para a action.js
+            this.dragAction(mouseX, mouseY, this.draggingCard.card);
+        }
+        this.draggingCard = null;
+    }
+
+    getPlayerColumnAt(x, y) {
+        if (x > 510 && x < 690 && y > 600 && y < 820) {
+            return 1
+        }
+        if (x > 510 + 200 && x < 690 + 200 && y > 600 && y < 820) {
+            return 2
+        }
+        if (x > 510 + 400 && x < 690 + 400 && y > 600 && y < 820) {
+            return 3
+        }
+        if (x > 510 + 600 && x < 690 + 600 && y > 600 && y < 820) {
+            return 4
         }
     }
 }

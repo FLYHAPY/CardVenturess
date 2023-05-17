@@ -68,12 +68,15 @@ class Play {
                     await pool.query(`Update game set gm_turn=gm_turn+1 where gm_id = ?`,
                         [game.id]);
                 }
+                await MatchDecks.changeposto6(game);
                 await MatchDecks.genPlayerDeck(game.opponents[0].id);
                 await MatchDecks.genPlayerDeck(game.player.id);
                 await MatchDecks.battlefase(game);
                 await MatchDecks.showCards(game);
                 await MatchDecks.reduceHealth(game);
                 await MatchDecks.killCards(game);
+                await MatchDecks.passCards(game.player.id)
+                await MatchDecks.passCards(game.opponents[0].id)
             }
 
             return { status: 200, result: { msg: "Your turn ended." } };

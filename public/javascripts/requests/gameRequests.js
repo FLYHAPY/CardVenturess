@@ -101,3 +101,17 @@ async function requestCloseScore() {
     }
 }
 
+async function requestDead() {
+    try {
+        const response = await fetch('/api/decks/killed');
+        let result = await response.json();
+        return {successful: response.status == 200,
+                unauthenticated: response.status == 401,
+                decks: result};
+    } catch (err) {
+        // Treat 500 errors here
+        console.log(err);
+        return {err: err};
+    }
+}
+

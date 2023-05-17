@@ -1,7 +1,7 @@
 class BoardCard {
     static width = 140;
     static height = 210;
-    static pos1x = 450
+    static pos1x = 530
     static pos1y = 600
     constructor(card, img, charmander, building, spell) {
         this.card = card;

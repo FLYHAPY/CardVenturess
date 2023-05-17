@@ -61,4 +61,18 @@ router.get('/boardOpp', auth.verifyAuth, async function (req, res, next) {
     }
 });
 
+router.get('/killed', auth.verifyAuth, async function (req, res, next) {
+    try {
+        console.log("Get cards on the board of the game for authenticated user");
+        if (!req.game || req.game.opponents.length == 0) {
+            res.status(400).send({msg:"Your are not in a game or are still waiting for another player."});
+        } 
+        let result = await MatchDecks.showDeadCards(req.game);
+        res.status(result.status).send(result.result);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+});
+
 module.exports = router;
