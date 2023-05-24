@@ -1,0 +1,77 @@
+@font-face {
+  font-family: CustomFont;
+  src: url("../assets/fonts/Mat Saleh.ttf");
+}
+
+#matches {
+  flex-wrap: wrap;
+  justify-content: space-around;
+  position: absolute;
+  top: 300;
+  left: 800;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+#matches section {
+  background-color: #23242a;
+  font-family: "CustomFont";
+  color: white;
+  text-align: center;
+  width: 300px;
+  height: 150px;
+  font-weight: 1000;
+  font-size: 30px;
+  cursor: pointer;
+  border: 4px solid black;
+  border-radius: 5px;
+  border-color: #414244f5;
+  transition: clor, background-color, 0.5s;
+}
+
+#matches section:hover {
+  color: #23242a;
+  background-color: white;
+}
+
+input {
+  color: white;
+  background-color: #23242a;
+  cursor: pointer;
+  border: 4px solid black;
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  border-radius: 5px;
+  border-color: #414244f5;
+  font-family: "CustomFont";
+  font-size: 20px;
+  transition: clor, background-color, 0.5s;
+}
+
+input:hover {
+  color: #23242a;
+  background-color: white;
+}
+
+body {
+  background-color: #23242a;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+.name {
+  font-size: 100px;
+  font-family: "CustomFont";
+  color: white;
+}

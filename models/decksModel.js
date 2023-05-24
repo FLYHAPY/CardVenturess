@@ -32,12 +32,12 @@ class Card {
             let [cards] = await pool.query(`select * from card inner join card_type on crd_type_id = ct_id`);
             let playercards = await pool.query("select * from user_game_card where ugc_user_game_id = ? and ugc_board_pos >= 0", [playerId]);
             let rndCard = 0;
-            if(playercards[0].length >= 16)
-                return { status: 200};
-            do{
+            if (playercards[0].length >= 20)
+                return { status: 200 };
+            do {
                 rndCard = fromDBCardToCard(cards[Math.floor(Math.random() * cards.length)]);
-                
-                playercards = await pool.query(`select * from user_game_card where ugc_crd_id = ? and ugc_user_game_id = ? and ugc_board_pos >= 0`,[rndCard.cardId, playerId]);
+
+                playercards = await pool.query(`select * from user_game_card where ugc_crd_id = ? and ugc_user_game_id = ? and ugc_board_pos >= 0`, [rndCard.cardId, playerId]);
             } while (playercards[0].length > 3);
 
 
@@ -63,7 +63,13 @@ class MatchDecks {
     static async genPlayerDeck(playerId) {
         try {
             let cards = [];
-            for (let i = 0; i < Settings.nCards; i++) {
+            let [rescount] = await pool.query(`Select COUNT(*) as count from user_game_card 
+            where ugc_user_game_id = ?  and ugc_board_pos = 0`,
+                [playerId]);
+            let myCardCount = rescount[0].count;
+            let nCards = Math.min(Settings.nCards, Settings.maxCards - myCardCount);
+
+            for (let i = 0; i < nCards; i++) {
                 let cardtopush = await Card.genCard(playerId);
                 cards.push(cardtopush.result);
             }
@@ -210,16 +216,13 @@ class MatchDecks {
                 let enemyCard = false
 
 
-                console.log("1st")
+
                 for (let oppboardcard of oppboardcards) {
-                    console.log("2nd")
                     if (playerboardcard.ugc_board_pos == oppboardcard.ugc_board_pos) {
                         enemyCard = oppboardcard;
                         break;
                     }
                 }
-                console.log(playerboardcard)
-                console.log(enemyCard)
 
                 if (enemyCard) {
                     await pool.query("update user_game_card set ugc_crd_hp = ? where ugc_id = ?", [enemyCard.ugc_crd_hp - playerboardcard.ugc_crd_damage, enemyCard.ugc_id]);
@@ -234,16 +237,12 @@ class MatchDecks {
             for (let oppboardcard of oppboardcards) {
                 let enemyCard2 = false
 
-                console.log("3st")
                 for (let playerboardcard of playerboardcards) {
-                    console.log("4nd")
                     if (oppboardcard.ugc_board_pos == playerboardcard.ugc_board_pos) {
                         enemyCard2 = playerboardcard;
                         break;
                     }
                 }
-                console.log(oppboardcard)
-                console.log(enemyCard2)
                 if (enemyCard2) {
                     await pool.query("update user_game_card set ugc_crd_hp = ? where ugc_id = ?", [enemyCard2.ugc_crd_hp - oppboardcard.ugc_crd_damage, enemyCard2.ugc_id]);
                 } else {
@@ -285,7 +284,6 @@ class MatchDecks {
                 [game.opponents[0].id]);
 
             if (dbcards.length == 0) {
-                console.log("0 cards")
                 return { status: 200, result: {} }
             } else {
                 let playerCards = [];
@@ -425,7 +423,7 @@ class MatchDecks {
                 }
             }
             return { status: 200, result: new MatchDecks(playerCards, oppCards) };
-        } catch(error) {
+        } catch (error) {
             console.log(error);
             return { status: 500, result: error };
         }
@@ -434,9 +432,9 @@ class MatchDecks {
         try {
             let playercards = await pool.query("select * from user_game_card where ugc_user_game_id = ?", [playerId]);
             let [deadCards] = await pool.query("select * from user_game_card where ugc_user_game_id = ? and ugc_board_pos = 6", [playerId]);
-        
-            if (playercards[0].length == 16){
-                for (let deadCard of deadCards){
+
+            if (playercards[0].length == 20) {
+                for (let deadCard of deadCards) {
                     await pool.query("update user_game_card set ugc_board_pos = -1 where ugc_user_game_id = ? and ugc_crd_id = ? and ugc_board_pos = 6", [playerId, deadCard.ugc_crd_id]);
                 }
             }
@@ -447,6 +445,22 @@ class MatchDecks {
             console.log(error);
             return { status: 500, result: error };
         }
+    }
+
+}
+
+
+function getCards(playerId) {
+    let [dbplayercardsonhand] = pool.query(`Select * from card
+        inner join card_type on crd_type_id = ct_id 
+        inner join user_game_card on ugc_crd_id = crd_id
+        where ugc_user_game_id = ?  and ugc_board_pos = 0`,
+        [playerId]);
+
+    if (dbplayercardsonhand.length == 8) {
+        return false
+    } else {
+        return true
     }
 }
 

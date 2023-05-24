@@ -17,14 +17,30 @@ a {
   font-size: larger;
 }
 
-#matches, #scores {
+#matches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-width: 150px;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+#scores{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-#matches section, #scores section {
+#matches section{
   background-color: crimson;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+}
+
+#scores section{
+  background-color: rgb(0, 0, 255);
   color: white;
   margin: 5px;
   padding: 5px;

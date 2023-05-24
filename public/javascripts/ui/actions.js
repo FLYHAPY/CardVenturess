@@ -25,7 +25,7 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks.mycards);
         } else {
-            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 200, 1100, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, dragndropToBoard);
+            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 270, 1100, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, dragndropToBoard, GameInfo.fonts.font, GameInfo.images.machopig);
         }
     }
 }
@@ -40,7 +40,7 @@ async function getYourBoard() {
         if (GameInfo.playerBoard) {
             GameInfo.playerBoard.update(GameInfo.matchDecks.mycards);
         } else {
-            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
+            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
         }
     }
 }
@@ -53,9 +53,9 @@ async function getOppBoard() {
     } else {
         GameInfo.matchDecks = result.decks;
         if (GameInfo.oppBoard) {
-                GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
+            GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
         } else {
-            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
+            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
         }
 
     }
@@ -68,27 +68,10 @@ async function getKilledInfo() {
         window.location.pathname = "index.html";
     } else {
         GameInfo.matchkilled = result.decks;
-        if (GameInfo.killed) GameInfo.killed.update(GameInfo.matchkilled.mycards); 
-        else GameInfo.killed = new KilledDeck(GameInfo.matchkilled.mycards,30, 300, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
-        if (GameInfo.oppkilled) GameInfo.oppkilled.update(GameInfo.matchkilled.oppcards); 
-        else GameInfo.oppkilled = new KilledDeck(GameInfo.matchkilled.oppcards,1500, 300, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell);
-    }
-}
-
-async function playCard(card) {
-    let position = parseInt(prompt(`What position (1,2,3,4)?`));
-
-    if (position > 4 || position < 1) {
-        alert("That position doesn't exist");
-        result = !result.successful
-    }
-
-    if (result.successful) {
-        let result = await requestPlayCard(card.deckId, position, card.type);
-        await getGameInfo();
-        await getYourBoard();
-        await getDecksInfo();
-        GameInfo.prepareUI();
+        if (GameInfo.killed) GameInfo.killed.update(GameInfo.matchkilled.mycards);
+        else GameInfo.killed = new KilledDeck(GameInfo.matchkilled.mycards, 30, 300, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
+        if (GameInfo.oppkilled) GameInfo.oppkilled.update(GameInfo.matchkilled.oppcards);
+        else GameInfo.oppkilled = new KilledDeck(GameInfo.matchkilled.oppcards, 1500, 300, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
     }
 }
 
@@ -112,7 +95,7 @@ async function dragndropToBoard(x, y, card) {
     let pos = GameInfo.playerDeck.getPlayerColumnAt(x, y);
     //isto é para jogares a carta que estas a arrastar na posiçao que largaste que obtens em cima
     playCardToBoard(card, pos);
-}   
+}
 
 async function playCardToBoard(card, position) {
     if (position > 4 || position < 1) {
@@ -126,5 +109,6 @@ async function playCardToBoard(card, position) {
         await getYourBoard();
         await getDecksInfo();
         GameInfo.prepareUI();
+        GameInfo.sounds.sound.play()
     }
 }

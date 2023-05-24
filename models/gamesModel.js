@@ -4,10 +4,10 @@ const State = require("./statesModel");
 // For now it is only an auxiliary class to hold data in here 
 // so no need to create a model file for it
 class Player {
-    constructor(id,name,state,order,hp) {
-        this.id = id;        
+    constructor(id, name, state, order, hp) {
+        this.id = id;
         this.name = name;
-        this.state= state;
+        this.state = state;
         this.order = order;
         this.hp = hp
     }
@@ -22,7 +22,7 @@ class Player {
 }
 
 class Game {
-    constructor(id,turn,state,player,opponents) {
+    constructor(id, turn, state, player, opponents) {
         this.id = id;
         this.turn = turn;
         this.state = state;
@@ -38,29 +38,29 @@ class Game {
             game.player = this.player.export();
         game.opponents = this.opponents.map(o => o.export());
         return game;
-    }    
+    }
 
     // No verifications, we assume they were already made
     // This is mostly an auxiliary method
-    static async fillPlayersOfGame(userId,game) {
+    static async fillPlayersOfGame(userId, game) {
         try {
             let [dbPlayers] = await pool.query(`Select * from user 
             inner join user_game on ug_user_id = usr_id
              inner join user_game_state on ugst_id = ug_state_id
             where ug_game_id=?`, [game.id]);
             for (let dbPlayer of dbPlayers) {
-                let player = new Player(dbPlayer.ug_id,dbPlayer.usr_name,
-                            new State(dbPlayer.ugst_id,dbPlayer.ugst_state),dbPlayer.ug_order, dbPlayer.ug_hp);
+                let player = new Player(dbPlayer.ug_id, dbPlayer.usr_name,
+                    new State(dbPlayer.ugst_id, dbPlayer.ugst_state), dbPlayer.ug_order, dbPlayer.ug_hp);
                 if (dbPlayer.usr_id == userId) game.player = player;
                 else game.opponents.push(player);
             }
-            return {status:200, result: game};
+            return { status: 200, result: game };
         } catch (err) {
             console.log(err);
             return { status: 500, result: err };
         }
     }
-    
+
     //azkladjaoisdfasdfiodshfsdfihoasdihof!!!!!!!
     static async getPlayerActiveGame(id) {
         try {
@@ -71,16 +71,16 @@ class Game {
                     inner join game_state on gm_state_id = gst_id
                     where ug_user_id=? and (gst_state IN ('Waiting','Placing') 
                     or (gst_state = 'Finished' and ugst_state = 'End')) `, [id]);
-            if (dbGames.length==0)
-                return {status:200, result:false};
+            if (dbGames.length == 0)
+                return { status: 200, result: false };
             let dbGame = dbGames[0];
-            let game = new Game(dbGame.gm_id,dbGame.gm_turn,new State(dbGame.gst_id,dbGame.gst_state));
-            let result = await this.fillPlayersOfGame(id,game);
+            let game = new Game(dbGame.gm_id, dbGame.gm_turn, new State(dbGame.gst_id, dbGame.gst_state));
+            let result = await this.fillPlayersOfGame(id, game);
             if (result.status != 200) {
                 return result;
             }
             game = result.result;
-        return { status: 200, result: game} ;
+            return { status: 200, result: game };
         } catch (err) {
             console.log(err);
             return { status: 500, result: err };
@@ -95,27 +95,27 @@ class Game {
                     where gst_state = 'Waiting'`);
             let games = [];
             for (let dbGame of dbGames) {
-                let game = new Game(dbGame.gm_id,dbGame.gm_turn,new State(dbGame.gst_id,dbGame.gst_state));
-                let result = await this.fillPlayersOfGame(userId,game);
+                let game = new Game(dbGame.gm_id, dbGame.gm_turn, new State(dbGame.gst_id, dbGame.gst_state));
+                let result = await this.fillPlayersOfGame(userId, game);
                 if (result.status != 200) {
                     return result;
                 }
                 game = result.result;
                 games.push(game);
             }
-            return { status: 200, result: games} ;
+            return { status: 200, result: games };
         } catch (err) {
             console.log(err);
             return { status: 500, result: err };
         }
-    }    
+    }
 
 
     // A game is always created with one user
     // No verifications. We assume the following were already made (because of authentication):
     //  - Id exists and user exists
     //  - User does not have an active game
-    // Here we need to change so that the player gets 300 hp when he joins!!!!!!!!
+    // Here we need to change so that the player gets 500 hp when he joins!!!!!!!!
 
     static async create(userId) {
         try {
@@ -124,8 +124,8 @@ class Game {
             let gameId = result.insertId;
             // add the user to the game
             await pool.query(`Insert into user_game (ug_user_id,ug_game_id,ug_state_id, ug_hp) values (?,?,?,?)`,
-                 [userId, gameId, 1, 300]);
-            return {status:200, result: {msg: "You created a new game."}};
+                [userId, gameId, 1, 500]);
+            return { status: 200, result: { msg: "You created a new game." } };
         } catch (err) {
             console.log(err);
             return { status: 500, result: err };
@@ -143,8 +143,8 @@ class Game {
     static async cancel(gameId) {
         try {
             await pool.query(`Update game set gm_state_id=? where gm_id = ?`,
-                    [4,gameId]);
-            return {status:200, result: {msg: "Game canceled."}};
+                [4, gameId]);
+            return { status: 200, result: { msg: "Game canceled." } };
         } catch (err) {
             console.log(err);
             return { status: 500, result: err };
@@ -154,7 +154,7 @@ class Game {
 
 
     // ---- These methods assume a two players game (we need it at this point) --------
-          
+
 
     // We consider the following verifications were already made (because of authentication):
     //  - Id exists and user exists
@@ -163,20 +163,20 @@ class Game {
     static async join(userId, gameId) {
         try {
             let [dbGames] = await pool.query(`Select * from game where gm_id=?`, [gameId]);
-            if (dbGames.length==0)
-                return {status:404, result:{msg:"Game not found"}};
+            if (dbGames.length == 0)
+                return { status: 404, result: { msg: "Game not found" } };
             let dbGame = dbGames[0];
-            if (dbGame.gm_state_id != 1) 
-                return {status:400, result:{msg:"Game not waiting for other players"}};
-            
+            if (dbGame.gm_state_id != 1)
+                return { status: 400, result: { msg: "Game not waiting for other players" } };
+
             // Randomly determine who starts    
             let myTurn = (Math.random() < 0.5);
 
             // We join the game but the game still has not started, that will be done outside
             let [result] = await pool.query(`Insert into user_game (ug_user_id,ug_game_id,ug_state_id, ug_hp) values (?,?,?,?)`,
-                        [userId, gameId, 1, 300]);
-         
-            return {status:200, result: {msg: "You joined the game."}};
+                [userId, gameId, 1, 300]);
+
+            return { status: 200, result: { msg: "You joined the game." } };
         } catch (err) {
             console.log(err);
             return { status: 500, result: err };
