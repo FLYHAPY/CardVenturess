@@ -105,6 +105,7 @@ class Deck {
         this.draggable = false;
         this.dragAction = dragAction;
         this.font = font
+        this.dragging = false
         this.draggingCard = null;
     }
 
@@ -133,6 +134,25 @@ class Deck {
         for (let card of this.cards) {
             card.draw();
         }
+
+        if (this.dragging == true) {
+            if (mouseX > 500 && mouseX < 700 && mouseY > 550 && mouseY < 860) {
+                fill(0, 0, 0, 100)
+                rect(500, 550, 200, 310)
+            }
+            if (mouseX > 500 + 200 && mouseX < 700 + 200 && mouseY > 550 && mouseY < 860) {
+                fill(0, 0, 0, 100)
+                rect(700, 550, 200, 310)
+            }
+            if (mouseX > 500 + 400 && mouseX < 700 + 400 && mouseY > 550 && mouseY < 860) {
+                fill(0, 0, 0, 100)
+                rect(900, 550, 200, 310)
+            }
+            if (mouseX > 500 + 600 && mouseX < 700 + 600 && mouseY > 550 && mouseY < 860) {
+                fill(0, 0, 0, 100)
+                rect(1100, 550, 200, 310)
+            }
+        }
     }
     click() {
         if (this.clickAction) {
@@ -156,6 +176,7 @@ class Deck {
                 card.dragy = mouseY + card.offsetY;
                 card.dragging = true;
                 this.draggingCard = card;
+                this.dragging = true
             }
         }
     }
@@ -171,10 +192,11 @@ class Deck {
             this.dragAction(mouseX, mouseY, this.draggingCard.card);
         }
         this.draggingCard = null;
+        this.dragging = false;
     }
 
     getPlayerColumnAt(x, y) {
-        if (x > 510 && x < 690 && y > 600 && y < 820) {
+        if (x > 500 && x < 700 && y > 550 && y < 860) {
             return 1
         }
         if (x > 510 + 200 && x < 690 + 200 && y > 600 && y < 820) {
@@ -190,13 +212,15 @@ class Deck {
 
     mouseontop() {
         if (this.draggable) {
-            for (let card of this.cards) {
-                let ypos = 1000
+            if (this.dragging == false) {
+                for (let card of this.cards) {
+                    let ypos = 1000
 
-                if (mouseX > card.x && mouseX < card.x + Card.width && mouseY > ypos && mouseY < ypos + Card.height + 100) {
-                    card.y = 1000
-                } else {
-                    card.y = 1100
+                    if (mouseX > card.x && mouseX < card.x + Card.width && mouseY > ypos && mouseY < ypos + Card.height + 100) {
+                        card.y = 1000
+                    } else {
+                        card.y = 1100
+                    }
                 }
             }
         }

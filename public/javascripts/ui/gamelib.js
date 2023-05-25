@@ -27,6 +27,7 @@ function preload() {
   GameInfo.fonts.font = loadFont("assets/fonts/KOMTXT__.ttf");
   GameInfo.images.health = loadImage("assets/HPBarSprite.png")
   GameInfo.images.opphealth = loadImage("assets/HPBarSpriteOpp.png")
+  GameInfo.sounds.yourturn = loadSound("assets/souns/Your turn.wav")
 
 }
 

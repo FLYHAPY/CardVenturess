@@ -4,7 +4,7 @@ class ScoreBoard {
     static width = 320;
     static height = 150;
     static x = 10;
-    static y = 100;
+    static y = 120;
     constructor(game) {
         this.game = game;
     }
@@ -23,6 +23,11 @@ class ScoreBoard {
         text(`(${this.game.opponents[0].state})`, ScoreBoard.x + 200, ScoreBoard.y + 2 * ScoreBoard.height / 4);
         text("Health:" + this.game.player.hp, ScoreBoard.x + 10, ScoreBoard.y + 2.5 * ScoreBoard.height / 4)
         text("OppHealth:" + this.game.opponents[0].hp, ScoreBoard.x + 200, ScoreBoard.y + 2.5 * ScoreBoard.height / 4);
+        push()
+        textSize(30)
+        text(this.game.player.name, 100, 120)
+        text(this.game.opponents[0].name, 1640, 120)
+        pop()
         if (this.game.player.hp >= 0) {
             push()
             strokeWeight(0);
@@ -63,6 +68,18 @@ class ScoreBoard {
             textStyle(BOLD);
             textAlign(CENTER, CENTER);
             text("GAMEOVER", ScoreBoard.x + 200, ScoreBoard.y - 5 + ScoreBoard.height / 4)
+        }
+
+        if (GameInfo.game.player.state != "Waiting") {
+            push()
+            textSize(50)
+            text("Your turn!", 800, 50)
+            pop()
+        } else {
+            push()
+            textSize(50)
+            text("Opp Turn!", 800, 50)
+            pop()
         }
     }
 
