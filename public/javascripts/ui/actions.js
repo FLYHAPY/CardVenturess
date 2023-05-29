@@ -25,7 +25,7 @@ async function getDecksInfo() {
         if (GameInfo.playerDeck) {
             GameInfo.playerDeck.update(GameInfo.matchDecks.mycards);
         } else {
-            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 270, 1100, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, dragndropToBoard, GameInfo.fonts.font, GameInfo.images.machopig);
+            GameInfo.playerDeck = new Deck(GameInfo.matchDecks.mycards, 265, 700, dragndropToBoard, GameInfo.fonts.font);
         }
     }
 }
@@ -40,7 +40,7 @@ async function getYourBoard() {
         if (GameInfo.playerBoard) {
             GameInfo.playerBoard.update(GameInfo.matchDecks.mycards);
         } else {
-            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
+            GameInfo.playerBoard = new Board(GameInfo.matchDecks.mycards);
         }
     }
 }
@@ -55,7 +55,7 @@ async function getOppBoard() {
         if (GameInfo.oppBoard) {
             GameInfo.oppBoard.update(GameInfo.matchDecks.oppcards);
         } else {
-            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
+            GameInfo.oppBoard = new OppBoard(GameInfo.matchDecks.oppcards);
         }
 
     }
@@ -69,14 +69,15 @@ async function getKilledInfo() {
     } else {
         GameInfo.matchkilled = result.decks;
         if (GameInfo.killed) GameInfo.killed.update(GameInfo.matchkilled.mycards);
-        else GameInfo.killed = new KilledDeck(GameInfo.matchkilled.mycards, 30, 300, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
+        else GameInfo.killed = new KilledDeck(GameInfo.matchkilled.mycards, 30, 260);
         if (GameInfo.oppkilled) GameInfo.oppkilled.update(GameInfo.matchkilled.oppcards);
-        else GameInfo.oppkilled = new KilledDeck(GameInfo.matchkilled.oppcards, 1500, 300, GameInfo.images.card, GameInfo.images.charmander, GameInfo.images.building, GameInfo.images.spell, GameInfo.images.machopig);
+        else GameInfo.oppkilled = new KilledDeck(GameInfo.matchkilled.oppcards, 1600, 260);
     }
 }
 
 async function endturnAction() {
     let result = await requestEndTurn();
+    GameInfo.sounds.oppturn.play()
     if (result.successful) {
         await getGameInfo();
         GameInfo.prepareUI();
@@ -105,10 +106,8 @@ async function playCardToBoard(card, position) {
 
     if (result.successful) {
         let result = await requestPlayCard(card.deckId, position, card.type);
-        await getGameInfo();
         await getYourBoard();
         await getDecksInfo();
-        GameInfo.prepareUI();
-        GameInfo.sounds.sound.play()
+        GameInfo.sounds.soundeffect.play();
     }
 }

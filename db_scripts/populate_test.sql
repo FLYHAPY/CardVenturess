@@ -17,7 +17,23 @@ insert into card_type (ct_name) values ("Monster");
 insert into card_type (ct_name) values ("Building");
 insert into card_type (ct_name) values ("Spell");
 
-insert into card (crd_name, crd_hp, crd_damage, crd_type_id) values ("Monster", 50, 50, 1),("Monster2", 70, 30, 1), ("Building",50,0,2),("Spell",0,50,3),("Macho Pig", 80, 20, 1);
+insert into card (crd_name, crd_hp, crd_damage, crd_type_id) values 
+("Corn Archer", 50, 50, 1),
+("Tomato Guy", 70, 30, 1), 
+("Castle",20,0,2), 
+("Fireball",0,20,3), 
+("Macho Pig", 80, 20, 1), 
+("Farmer", 40, 60, 1),
+("Corn Witch", 55, 45, 1),
+("Great Wall",10,0,2),
+("Barn",15,0,2),
+("Farm House",25,0,2),
+("Corn Field",30,0,2),
+("Iceball",0,20,3), 
+("Holy Beam ",0,20,3), 
+("Darkness Beam",0,20,3), 
+("Grass Touch",0,20,3); 
+
 
 INSERT INTO user VALUES (1,'me','$2b$10$Wemfac2wY/7RSCdKxuYUL.GV2clfhXC66OL76uCpDFUmpYZ/bGZtW','48MnTVJ6sKIvanVHbP5Vx5rysbYrVN4EbYmk4D8xESdfm1hx8jDfNFZGNw9OZs'),(2,'me2','$2b$10$6j2xIDnnxv.TLfBSstbbO.qE7wFTf5envx/uijiFjCP3slsy7EE4K','dQ7NrsbPsuF81xFGNioR1K0tiYkjtxOhemcgMhuFIS68VrFUC9gggm3JCgzkqe');
 INSERT INTO game VALUES (1,1,2);

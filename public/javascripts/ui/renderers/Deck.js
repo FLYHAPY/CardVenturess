@@ -1,14 +1,10 @@
 class Card {
-    static width = 157.5;
-    static height = 236.25;
-    constructor(card, x, y, img, charmander, building, spell, font, machopig) {
+    static width = 150;
+    static height = 225;
+    constructor(card, x, y, img, font) {
         this.card = card;
         this.x = x;
         this.y = y;
-        this.img = img;
-        this.charmander = charmander;
-        this.building = building;
-        this.spell = spell;
         this.dragging = false;
         this.offsety = 0;
         this.offsetx = 0;
@@ -16,75 +12,168 @@ class Card {
         this.dragy = 0;
         this.selected = false;
         this.font = font
-        this.machopig = machopig
     }
     draw() {
         if (this.card.cardId == 1) {
-            image(this.img, this.x, this.y, Card.width, Card.height);
+            image(GameInfo.images.corn_archer, this.x, this.y, Card.width, Card.height);
             push();
             textFont(GameInfo.fonts.font)
-            text(this.card.current_hp, this.x + 125, this.y + 25)
-            text(this.card.current_damage, this.x + 45, this.y + 25)
+            text(this.card.current_hp, this.x + 115, this.y + 23)
+            text(this.card.current_damage, this.x + 45, this.y + 23)
             pop()
             if (this.dragging) {
                 tint(255, 100);
-                image(this.img, this.dragx, this.dragy, Card.width, Card.height);
+                image(GameInfo.images.corn_archer, this.dragx, this.dragy, Card.width, Card.height);
                 tint(255, 255);
+                noTint()
             }
 
         }
         if (this.card.cardId == 2) {
-            image(this.charmander, this.x, this.y, Card.width, Card.height);
+            image(GameInfo.images.tomato_guy, this.x, this.y, Card.width, Card.height);
             push();
             textFont(GameInfo.fonts.font)
-            text(this.card.current_hp, this.x + 120, this.y + 25)
-            text(this.card.current_damage, this.x + 45, this.y + 25)
+            text(this.card.current_hp, this.x + 115, this.y + 23)
+            text(this.card.current_damage, this.x + 45, this.y + 23)
             pop()
             if (this.dragging) {
                 tint(255, 100);
-                image(this.charmander, this.dragx, this.dragy, Card.width, Card.height);
+                image(GameInfo.images.tomato_guy, this.dragx, this.dragy, Card.width, Card.height);
                 tint(255, 255);
+                noTint()
             }
         }
         if (this.card.cardId == 3) {
-            image(this.building, this.x, this.y, Card.width, Card.height);
-            push();
-            textFont(GameInfo.fonts.font)
-            text(this.card.current_hp, this.x + 100, this.y)
-            text(this.card.current_damage, this.x, this.y)
-            pop()
+            image(GameInfo.images.castle, this.x, this.y, Card.width, Card.height);
             if (this.dragging) {
                 tint(255, 100);
-                image(this.building, this.dragx, this.dragy, Card.width, Card.height);
+                image(GameInfo.images.castle, this.dragx, this.dragy, Card.width, Card.height);
                 tint(255, 255);
+                noTint()
             }
         }
         if (this.card.cardId == 4) {
-            image(this.spell, this.x, this.y, Card.width, Card.height);
-            push();
-            textFont(GameInfo.fonts.font)
-            text(this.card.current_hp, this.x + 100, this.y)
-            text(this.card.current_damage, this.x, this.y)
-            pop()
+            image(GameInfo.images.fireball, this.x, this.y, Card.width, Card.height);
             if (this.dragging) {
                 tint(255, 100);
-                image(this.spell, this.dragx, this.dragy, Card.width, Card.height);
+                image(GameInfo.images.fireball, this.dragx, this.dragy, Card.width, Card.height);
                 tint(255, 255);
+                noTint()
             }
         }
         if (this.card.cardId == 5) {
-            image(this.machopig, this.x, this.y, Card.width, Card.height);
+            image(GameInfo.images.macho_pig, this.x, this.y, Card.width, Card.height);
             push();
             textFont(GameInfo.fonts.font)
-            text(this.card.current_hp, this.x + 123, this.y + 25)
-            text(this.card.current_damage, this.x + 45, this.y + 25)
+            text(this.card.current_hp, this.x + 115, this.y + 23)
+            text(this.card.current_damage, this.x + 45, this.y + 23)
             pop()
+            if (this.dragging == true) {
+                tint(255, 100);
+                image(GameInfo.images.macho_pig, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 6) {
+            image(GameInfo.images.farmer, this.x, this.y, Card.width, Card.height);
+            push();
+            textFont(GameInfo.fonts.font)
+            text(this.card.current_hp, this.x + 115, this.y + 23)
+            text(this.card.current_damage, this.x + 45, this.y + 23)
+            pop()
+            if (this.dragging == true) {
+                tint(255, 100);
+                image(GameInfo.images.farmer, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 7) {
+            image(GameInfo.images.corn_witch, this.x, this.y, Card.width, Card.height);
+            push();
+            textFont(GameInfo.fonts.font)
+            text(this.card.current_hp, this.x + 115, this.y + 23)
+            text(this.card.current_damage, this.x + 45, this.y + 23)
+            pop()
+            if (this.dragging == true) {
+                tint(255, 100);
+                image(GameInfo.images.corn_witch, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 8) {
+            image(GameInfo.images.great_wall, this.x, this.y, Card.width, Card.height);
             if (this.dragging) {
                 tint(255, 100);
-                image(this.machopig, this.dragx, this.dragy, Card.width, Card.height);
+                image(GameInfo.images.great_wall, this.dragx, this.dragy, Card.width, Card.height);
                 tint(255, 255);
+                noTint()
             }
-
+        }
+        if (this.card.cardId == 9) {
+            image(GameInfo.images.barn, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.barn, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 10) {
+            image(GameInfo.images.farm_house, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.farm_house, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 11) {
+            image(GameInfo.images.corn_field, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.corn_field, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 12) {
+            image(GameInfo.images.iceball, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.iceball, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 13) {
+            image(GameInfo.images.holy_beam, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.holy_beam, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 14) {
+            image(GameInfo.images.darkness_beam, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.darkness_beam, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
+        }
+        if (this.card.cardId == 15) {
+            image(GameInfo.images.grass_touch, this.x, this.y, Card.width, Card.height);
+            if (this.dragging) {
+                tint(255, 100);
+                image(GameInfo.images.grass_touch, this.dragx, this.dragy, Card.width, Card.height);
+                tint(255, 255);
+                noTint()
+            }
         }
     }
 }
@@ -92,15 +181,10 @@ class Card {
 
 class Deck {
 
-    constructor(cardsInfo, x, y, cardImg, charmander, building, spell, dragAction, font, machopig) {
+    constructor(cardsInfo, x, y, dragAction, font) {
         this.x = x;
         this.y = y;
         this.width = Card.width * Deck.nCards;
-        this.cardImg = cardImg;
-        this.charmanderImg = charmander;
-        this.building = building;
-        this.spell = spell
-        this.machopig = machopig
         this.cards = this.createCards(cardsInfo);
         this.draggable = false;
         this.dragAction = dragAction;
@@ -113,7 +197,7 @@ class Deck {
         let cards = [];
         let x = this.x;
         for (let cardInfo of cardsInfo) {
-            cards.push(new Card(cardInfo, x, this.y, this.cardImg, this.charmanderImg, this.building, this.spell, this.font, this.machopig));
+            cards.push(new Card(cardInfo, x, this.y, this.font));
             x += Card.width;
         }
         return cards;
@@ -136,21 +220,29 @@ class Deck {
         }
 
         if (this.dragging == true) {
-            if (mouseX > 500 && mouseX < 700 && mouseY > 550 && mouseY < 860) {
+            if (mouseX > 552 && mouseX < 708 && mouseY > 410 && mouseY < 612) {
+                push()
                 fill(0, 0, 0, 100)
-                rect(500, 550, 200, 310)
+                rect(552, 410, 160, 202)
+                pop()
             }
-            if (mouseX > 500 + 200 && mouseX < 700 + 200 && mouseY > 550 && mouseY < 860) {
+            if (mouseX > 709 && mouseX < 865 && mouseY > 410 && mouseY < 612) {
+                push()
                 fill(0, 0, 0, 100)
-                rect(700, 550, 200, 310)
+                rect(709, 410, 160, 202)
+                pop()
             }
-            if (mouseX > 500 + 400 && mouseX < 700 + 400 && mouseY > 550 && mouseY < 860) {
+            if (mouseX > 866 && mouseX < 1020 && mouseY > 410 && mouseY < 612) {
+                push()
                 fill(0, 0, 0, 100)
-                rect(900, 550, 200, 310)
+                rect(866, 410, 160, 202)
+                pop()
             }
-            if (mouseX > 500 + 600 && mouseX < 700 + 600 && mouseY > 550 && mouseY < 860) {
+            if (mouseX > 1021 && mouseX < 1175 && mouseY > 410 && mouseY < 612) {
+                push()
                 fill(0, 0, 0, 100)
-                rect(1100, 550, 200, 310)
+                rect(1021, 410, 155, 202)
+                pop()
             }
         }
     }
@@ -196,16 +288,16 @@ class Deck {
     }
 
     getPlayerColumnAt(x, y) {
-        if (x > 500 && x < 700 && y > 550 && y < 860) {
+        if (x > 552 && x < 712 && y > 410 && y < 612) {
             return 1
         }
-        if (x > 510 + 200 && x < 690 + 200 && y > 600 && y < 820) {
+        if (x > 709 && x < 865 && y > 410 && y < 612) {
             return 2
         }
-        if (x > 510 + 400 && x < 690 + 400 && y > 600 && y < 820) {
+        if (x > 866 && x < 1020 && y > 410 && y < 612) {
             return 3
         }
-        if (x > 510 + 600 && x < 690 + 600 && y > 600 && y < 820) {
+        if (x > 1021 && x < 1175 && y > 410 && y < 612) {
             return 4
         }
     }
@@ -214,12 +306,12 @@ class Deck {
         if (this.draggable) {
             if (this.dragging == false) {
                 for (let card of this.cards) {
-                    let ypos = 1000
+                    let ypos = 650
 
                     if (mouseX > card.x && mouseX < card.x + Card.width && mouseY > ypos && mouseY < ypos + Card.height + 100) {
-                        card.y = 1000
+                        card.y = 650
                     } else {
-                        card.y = 1100
+                        card.y = 700
                     }
                 }
             }

@@ -14,6 +14,13 @@ class ScoreWindow extends Window {
     draw() {
         super.draw();
         if (this.opened) {
+            if (this.player.state == "Won") {
+                image(GameInfo.images.win, 0, 0)
+                // GameInfo.sounds.youwon.play()
+            } else {
+                image(GameInfo.images.lose, 0, 0)
+                // GameInfo.sounds.youlose.play()
+            }
             fill(255);
             stroke(255);
             textAlign(CENTER, CENTER);
@@ -30,7 +37,6 @@ class ScoreWindow extends Window {
             }
             strokeWeight(1);
             textSize(40);
-            text("Score", this.x, this.y, this.width, this.height / 5);
             textSize(30);
             text("Name", this.x + this.width / 5, this.y + this.height / 5, this.width / 5, this.height / 5);
             text("State", this.x + 2 * this.width / 5, this.y + this.height / 5, this.width / 5, this.height / 5);

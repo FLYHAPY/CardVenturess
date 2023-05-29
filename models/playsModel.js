@@ -59,8 +59,8 @@ class Play {
             // Both players played
             if (game.player.order == 2) {
                 // Criteria to check if game ended
-                
-                
+
+
                 if (await checkEndGame(game)) {
                     return await Play.endGame(game);
                 } else {
@@ -69,14 +69,14 @@ class Play {
                         [game.id]);
                 }
                 await MatchDecks.changeposto6(game);
+                await MatchDecks.passCards(game.player.id)
+                await MatchDecks.passCards(game.opponents[0].id)
                 await MatchDecks.genPlayerDeck(game.opponents[0].id);
                 await MatchDecks.genPlayerDeck(game.player.id);
                 await MatchDecks.battlefase(game);
                 await MatchDecks.showCards(game);
                 await MatchDecks.reduceHealth(game);
                 await MatchDecks.killCards(game);
-                await MatchDecks.passCards(game.player.id)
-                await MatchDecks.passCards(game.opponents[0].id)
             }
 
             return { status: 200, result: { msg: "Your turn ended." } };

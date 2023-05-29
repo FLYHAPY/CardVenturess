@@ -32,13 +32,13 @@ class Card {
             let [cards] = await pool.query(`select * from card inner join card_type on crd_type_id = ct_id`);
             let playercards = await pool.query("select * from user_game_card where ugc_user_game_id = ? and ugc_board_pos >= 0", [playerId]);
             let rndCard = 0;
-            if (playercards[0].length >= 20)
+            if (playercards[0].length >= 40)
                 return { status: 200 };
             do {
                 rndCard = fromDBCardToCard(cards[Math.floor(Math.random() * cards.length)]);
 
                 playercards = await pool.query(`select * from user_game_card where ugc_crd_id = ? and ugc_user_game_id = ? and ugc_board_pos >= 0`, [rndCard.cardId, playerId]);
-            } while (playercards[0].length > 3);
+            } while ((rndCard.type == 1 && playercards[0].length > 3) || (rndCard.type == 2 && playercards[0].length > 1) || (rndCard.type == 3 && playercards[0].length > 1));
 
 
             let [result] = await pool.query(`Insert into user_game_card (ugc_user_game_id,ugc_crd_id,ugc_board_pos,ugc_crd_damage,ugc_crd_hp,ugc_active,ugc_crd_type)
@@ -433,7 +433,7 @@ class MatchDecks {
             let playercards = await pool.query("select * from user_game_card where ugc_user_game_id = ?", [playerId]);
             let [deadCards] = await pool.query("select * from user_game_card where ugc_user_game_id = ? and ugc_board_pos = 6", [playerId]);
 
-            if (playercards[0].length == 20) {
+            if (playercards[0].length == 40) {
                 for (let deadCard of deadCards) {
                     await pool.query("update user_game_card set ugc_board_pos = -1 where ugc_user_game_id = ? and ugc_crd_id = ? and ugc_board_pos = 6", [playerId, deadCard.ugc_crd_id]);
                 }
@@ -446,22 +446,5 @@ class MatchDecks {
             return { status: 500, result: error };
         }
     }
-
 }
-
-
-function getCards(playerId) {
-    let [dbplayercardsonhand] = pool.query(`Select * from card
-        inner join card_type on crd_type_id = ct_id 
-        inner join user_game_card on ugc_crd_id = crd_id
-        where ugc_user_game_id = ?  and ugc_board_pos = 0`,
-        [playerId]);
-
-    if (dbplayercardsonhand.length == 8) {
-        return false
-    } else {
-        return true
-    }
-}
-
 module.exports = MatchDecks;

@@ -9,31 +9,61 @@ async function refresh() {
     if (GameInfo.game.player.state != "Waiting") {
       // The moment we pass from waiting to play
       GameInfo.prepareUI();
+      GameInfo.sounds.yourturn.play()
     }
   }
-  // Nothing to do when we are playing since we control all that happens
-  // so no update is needed from the server
 }
 
 let board;
 function preload() {
-  GameInfo.images.card = loadImage("assets/corn_archer.png");
-  GameInfo.images.charmander = loadImage("assets/tomato_guy.png");
-  GameInfo.images.building = loadImage("assets/china.jpg");
-  GameInfo.images.spell = loadImage("assets/spell.png");
-  GameInfo.images.machopig = loadImage("assets/macho_pig.png")
+
+  // monster cards
+  GameInfo.images.corn_archer = loadImage("assets/corn_archer.png");
+  GameInfo.images.tomato_guy = loadImage("assets/tomato_guy.png");
+  GameInfo.images.macho_pig = loadImage("assets/macho_pig.png")
+  GameInfo.images.farmer = loadImage("assets/farmer.png")
+  GameInfo.images.corn_witch = loadImage("assets/corn_witch.png")
+
+  //building cards  
+  GameInfo.images.castle = loadImage("assets/castle.png");
+  GameInfo.images.great_wall = loadImage("assets/great_wall.png")
+  GameInfo.images.barn = loadImage("assets/barn.png")
+  GameInfo.images.farm_house = loadImage("assets/farm_house.png")
+  GameInfo.images.corn_field = loadImage("assets/corn_field.png")
+
+  // spell cards
+  GameInfo.images.fireball = loadImage("assets/fireball.png");
+  GameInfo.images.iceball = loadImage("assets/iceball.png");
+  GameInfo.images.holy_beam = loadImage("assets/holy_beam.png");
+  GameInfo.images.darkness_beam = loadImage("assets/darkness_beam.png");
+  GameInfo.images.grass_touch = loadImage("assets/grass_touch.png");
+
+  //ui
   board = loadImage("assets/board.png");
-  GameInfo.sounds.sound = loadSound("assets/souns/flipcard.mp3");
-  GameInfo.fonts.font = loadFont("assets/fonts/KOMTXT__.ttf");
   GameInfo.images.health = loadImage("assets/HPBarSprite.png")
   GameInfo.images.opphealth = loadImage("assets/HPBarSpriteOpp.png")
-  GameInfo.sounds.yourturn = loadSound("assets/souns/Your turn.wav")
+  GameInfo.images.background = loadImage("assets/Background.png")
+  GameInfo.images.win = loadImage("assets/you_won.png")
+  GameInfo.images.lose = loadImage("assets/you_lost.png")
+
+  //sounds
+  GameInfo.sounds.music = loadSound("assets/souns/music.wav")
+  GameInfo.sounds.yourturn = loadSound("assets/souns/your_turn.wav")
+  GameInfo.sounds.soundeffect = loadSound("assets/souns/flipcard.wav");
+  GameInfo.sounds.oppturn = loadSound("assets/souns/opp_turn.mp3")
+  GameInfo.sounds.youwon = loadSound("assets/souns/you_won.mp3")
+  GameInfo.sounds.youlose = loadSound("assets/souns/you_lost.mp3")
+
+  // fonts
+  GameInfo.fonts.font = loadFont("assets/fonts/KOMTXT__.ttf");
 
 }
 
 async function setup() {
   let canvas = createCanvas(GameInfo.width, GameInfo.height);
   canvas.parent("game");
+  GameInfo.sounds.music.loop()
+
   // preload  images
   await getGameInfo();
   await getDecksInfo();
@@ -51,36 +81,36 @@ async function setup() {
 
   GameInfo.prepareUI();
 
+
   GameInfo.loading = false;
+
+  if (GameInfo.game.player.state == "Waiting" && GameInfo.game.player.state != "End") {
+    GameInfo.sounds.oppturn.play()
+  } else if (GameInfo.game.player.state == "Playing" && GameInfo.game.player.state != "End") {
+    GameInfo.sounds.yourturn.play()
+  }
 }
 
 function draw() {
+  textFont(GameInfo.fonts.font)
   background(220);
   if (GameInfo.loading) {
     textAlign(CENTER, CENTER);
     textSize(40);
-    fill("black");
     text("Loading...", GameInfo.width / 2, GameInfo.height / 2);
   } else if (GameInfo.game.state == "Finished" && GameInfo.scoreWindow) {
     GameInfo.scoreWindow.draw();
   } else {
-    image(board, 0, 0);
+    image(GameInfo.images.background, 0, 0);
+    image(board, 550, 200);
     GameInfo.scoreBoard.draw();
-    GameInfo.playerDeck.draw();
     GameInfo.playerBoard.draw();
-    GameInfo.oppBoard.draw();
     GameInfo.killed.draw();
     GameInfo.oppkilled.draw();
     GameInfo.playerDeck.updateDrag();
     GameInfo.playerDeck.mouseontop();
-    push()
-    fill(100, 200, 100);
-    strokeWeight(0);
-    stroke(0);
-    rect(1651, 1451, 100, 24, 4)
-    pop()
-    fill(255, 255, 255);
-    text("OPP Turn", 1664, 1465)
+    GameInfo.playerDeck.draw();
+    GameInfo.oppBoard.draw();
   }
 }
 
