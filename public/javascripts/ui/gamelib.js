@@ -62,7 +62,7 @@ function preload() {
 async function setup() {
   let canvas = createCanvas(GameInfo.width, GameInfo.height);
   canvas.parent("game");
-  GameInfo.sounds.music.loop()
+  // GameInfo.sounds.music.loop()
 
   // preload  images
   await getGameInfo();
