@@ -47,7 +47,7 @@ function preload() {
   GameInfo.images.lose = loadImage("assets/you_lost.png")
 
   //sounds
-  GameInfo.sounds.music = loadSound("assets/souns/music.wav")
+  // GameInfo.sounds.music = loadSound("assets/souns/music.wav")
   GameInfo.sounds.yourturn = loadSound("assets/souns/your_turn.wav")
   GameInfo.sounds.soundeffect = loadSound("assets/souns/flipcard.wav");
   GameInfo.sounds.oppturn = loadSound("assets/souns/opp_turn.mp3")
